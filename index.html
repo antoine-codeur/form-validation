@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de validation du formulaire</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Validation du formulaire</h2>
+    
+    <label for="username">Nom d'utilisateur (min. 3 caractères)</label>
+    <input type="text" id="username" placeholder="Entrez votre nom d'utilisateur">
+    <div id="usernameMessage" class="validation-message">Le nom d'utilisateur doit comporter au moins 3 caractères.</div>
+
+    <label for="password">Mot de passe (min. 8 caractères)</label>
+    <input type="password" id="password" placeholder="Entrez votre mot de passe">
+    <div id="passwordMessage" class="validation-message">Le mot de passe doit comporter au moins 8 caractères.</div>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" placeholder="exemple@domaine.com">
+    <div id="emailMessage" class="validation-message">L'email doit avoir un format valide.</div>
+
+    <button id="validateButton">Tester la validité</button>
+
+    <div id="validationResult"></div>
+</div>
+
+<script src="validation.js"></script>
+<script>
+    document.getElementById('username').addEventListener('input', function() {
+        const username = this.value;
+        const isValid = validateUsername(username);
+        updateValidationMessage('usernameMessage', isValid, 'Nom d’utilisateur valide ✅', 'Le nom d’utilisateur doit comporter au moins 3 caractères.');
+    });
+
+    document.getElementById('password').addEventListener('input', function() {
+        const password = this.value;
+        const isValid = validatePassword(password);
+        updateValidationMessage('passwordMessage', isValid, 'Mot de passe valide ✅', 'Le mot de passe doit comporter au moins 8 caractères.');
+    });
+
+    document.getElementById('email').addEventListener('input', function() {
+        const email = this.value;
+        const isValid = validateEmail(email);
+        updateValidationMessage('emailMessage', isValid, 'Email valide ✅', 'L’email doit avoir un format valide.');
+    });
+
+    document.getElementById('validateButton').addEventListener('click', function() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const email = document.getElementById('email').value;
+
+        const usernameValid = validateUsername(username);
+        const passwordValid = validatePassword(password);
+        const emailValid = validateEmail(email);
+
+        const resultDiv = document.getElementById('validationResult');
+        if (usernameValid && passwordValid && emailValid) {
+            resultDiv.textContent = 'Tous les champs sont valides ✅';
+            resultDiv.style.color = 'green';
+        } else {
+            resultDiv.textContent = 'Certains champs ne sont pas valides ❌';
+            resultDiv.style.color = 'red';
+        }
+    });
+</script>
+</body>
+</html>
